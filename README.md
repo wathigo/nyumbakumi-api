@@ -1,3 +1,3 @@
 # nyumbakumi-api
 
-Backend application of the nyumbakumi project.
+Backend application for the nyumbakumi project.
