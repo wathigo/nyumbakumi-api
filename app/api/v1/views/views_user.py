@@ -1,4 +1,4 @@
-from flask_restful import Resource
+from flask_restplus import Resource
 
 class Users(Resource):
     """User record endpoints"""
@@ -6,5 +6,5 @@ class Users(Resource):
         pass
 
     def post(self):
-        """ post endpoint for user registration """
-        return "You a funny nigga"
+        """ test working endpoint """
+        return {"msg": "You a funny nigga"}

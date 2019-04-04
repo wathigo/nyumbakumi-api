@@ -9,9 +9,11 @@ class Person(db.Model):
     last_name = db.Column(db.String(70), nullable=False)
     national_id = db.Column(db.Integer, unique=True)
     phone_number = db.Column(db.Integer, unique=True)
+    email = db.Column(db.String(255), unique=True, nullable=True)
     residence = db.Column(db.Boolean, nullable=False, default=False)
+    land_id = db.Column(db.Integer, db.ForeignKey("person.id"))
+    land = db.relationship("Person", uselist=False, remote_side=[id])
     land_lord = db.Column(db.Boolean, nullable=True, default=False)
-    ward_id = db.Column(db.Integer, db.ForeignKey('ward.id'))
     area_id = db.Column(db.Integer, db.ForeignKey('area.id'),
         nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
