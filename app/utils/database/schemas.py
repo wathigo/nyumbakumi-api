@@ -18,7 +18,7 @@ class Person(db.Model):
         nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
-    password_hash = db.Column(db.String(100))
+    password_hash = db.Column(db.String(100), nullable=True)
     ward = db.relationship("Ward", uselist=False, back_populates="person")
     constituency = db.relationship("Constituency", uselist=False, back_populates="person")
     county = db.relationship("County", uselist=False, back_populates="person")
@@ -35,36 +35,19 @@ class Person(db.Model):
         return flask_bcrypt.check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return "<User '{}'>".format(self.first_name)
+        return "<Person '{}'>".format(self.first_name)
 
-
-class Area(db.Model):
-    """ Area model for storing details of an area instance in a ward"""
-    __tablename__ = "area"
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(70), nullable=False)
-    Lattitude = db.Column(db.Integer, nullable=False)
-    longitude = db.Column(db.Integer, nullable=False)
-    ward_id = db.Column(db.Integer, db.ForeignKey('ward.id'))
-    people = db.relationship('Person', backref='area', lazy=True)
-
-    def __repr__(self):
-        return "<Area '{}'>".format(self.name)
-
-class Ward(db.Model):
-    """ Area model for storing details of an ward instance in a constituency"""
-    __tablename__ = "ward"
+class County(db.Model):
+    """ Area model for storing details of specific County"""
+    __tablename__ = "county"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(70), nullable=False)
-    constituency_id = db.Column(db.Integer, db.ForeignKey('constituency.id'))
     admin_id = db.Column(db.Integer, db.ForeignKey('person.id'))
-    parent = db.relationship("Person", back_populates="ward")
-    areas = db.relationship("Area")
+    constituencies = db.relationship('Constituency', backref='county', lazy=True)
 
     def __repr__(self):
-        return "<Ward '{}'>".format(self.name)
+        return "<County '{}'>".format(self.name)
 
 class Constituency(db.Model):
     """ Area model for storing details of an constituency instance in a county"""
@@ -80,14 +63,30 @@ class Constituency(db.Model):
     def __repr__(self):
         return "<Constituency '{}'>".format(self.name)
 
-class County(db.Model):
-    """ Area model for storing details of specific County"""
-    __tablename__ = "county"
+class Ward(db.Model):
+    """ Area model for storing details of an ward instance in a constituency"""
+    __tablename__ = "ward"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(70), nullable=False)
+    constituency_id = db.Column(db.Integer, db.ForeignKey('constituency.id'))
     admin_id = db.Column(db.Integer, db.ForeignKey('person.id'))
-    constituencies = db.relationship('Constituency', backref='county', lazy=True)
+    parent = db.relationship("Person", back_populates="ward")
+    areas = db.relationship("Area")
 
     def __repr__(self):
-        return "<County '{}'>".format(self.name)
+        return "<Ward '{}'>".format(self.name)
+
+class Area(db.Model):
+    """ Area model for storing details of an area instance in a ward"""
+    __tablename__ = "area"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(70), nullable=False)
+    Lattitude = db.Column(db.Integer, nullable=False)
+    longitude = db.Column(db.Integer, nullable=False)
+    ward_id = db.Column(db.Integer, db.ForeignKey('ward.id'))
+    people = db.relationship('Person', backref='area', lazy=True)
+
+    def __repr__(self):
+        return "<Area '{}'>".format(self.name)

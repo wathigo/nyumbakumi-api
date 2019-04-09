@@ -11,7 +11,7 @@ class PersonModels():
     def __init__(self):
         self.models = BaseModels()
 
-    def save_new_user(self, data):
+    def save_new_person(self, data):
         """ Add a new user to the database """
         person = Person.query.filter_by(email=data['email']).first()
         if not person:
@@ -19,7 +19,7 @@ class PersonModels():
                 first_name=data['first_name'],
                 last_name = data['last_name'],
                 national_id = data['national_id'],
-                phone_number = data['phone_number']
+                phone_number = data['phone_number'],
                 residence = data['residence'],
                 land_id = data['land_id'],
                 land_lord = data['land_lord'],
