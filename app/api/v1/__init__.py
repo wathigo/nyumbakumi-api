@@ -9,7 +9,9 @@ api = Api(version_one)
 from .views.views_person import Person
 from .views.views_county import County
 from .views.views_constituency import Constituency
+from .views.views_ward import Ward
 
 api.add_resource(Person, '/register/person')
 api.add_resource(County, '/register/county')
 api.add_resource(Constituency, '/register/constituency')
+api.add_resource(Ward, '/register/ward')

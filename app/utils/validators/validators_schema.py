@@ -24,3 +24,7 @@ class CountyValidate(Schema):
 class ConstituencyValidate(Schema):
     name = fields.Str(required=True, validate=Views().validate_all_values)
     county_id = fields.Int(required=True, validate=Views().validate_all_values)
+
+class WardValidate(Schema):
+    name = fields.Str(required=True, validate=Views().validate_all_values)
+    constituency_id = fields.Int(required=True, validate=Views().validate_all_values)
