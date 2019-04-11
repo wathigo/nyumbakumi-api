@@ -20,3 +20,7 @@ class PersonValidate(Schema):
 
 class CountyValidate(Schema):
     name = fields.Str(required=True, validate=Views().validate_all_values)
+
+class ConstituencyValidate(Schema):
+    name = fields.Str(required=True, validate=Views().validate_all_values)
+    county_id = fields.Int(required=True, validate=Views().validate_all_values)
