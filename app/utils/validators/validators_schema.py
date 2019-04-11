@@ -28,3 +28,9 @@ class ConstituencyValidate(Schema):
 class WardValidate(Schema):
     name = fields.Str(required=True, validate=Views().validate_all_values)
     constituency_id = fields.Int(required=True, validate=Views().validate_all_values)
+
+class AreaValidate(Schema):
+    name = fields.Str(required=True, validate=Views().validate_all_values)
+    lattitude = fields.Int(require=True, validate=Views().validate_all_values)
+    longitude = fields.Int(required=True, validate=Views().validate_all_values)
+    ward_id = fields.Int(required=True, validate=Views().validate_all_values)

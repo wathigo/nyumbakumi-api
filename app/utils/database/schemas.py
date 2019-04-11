@@ -11,7 +11,7 @@ class Person(db.Model):
     phone_number = db.Column(db.Integer, unique=True)
     email = db.Column(db.String(255), unique=True, nullable=True)
     residence = db.Column(db.Boolean, nullable=False, default=False)
-    land_id = db.Column(db.Integer, db.ForeignKey("person.id"))
+    land_id = db.Column(db.Integer, db.ForeignKey("person.id"), nullable=True)
     land = db.relationship("Person", uselist=False, remote_side=[id])
     land_lord = db.Column(db.Boolean, nullable=True, default=False)
     area_id = db.Column(db.Integer, db.ForeignKey('area.id'),
@@ -75,7 +75,7 @@ class Area(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(70), nullable=False)
-    Lattitude = db.Column(db.Integer, nullable=False)
+    lattitude = db.Column(db.Integer, nullable=False)
     longitude = db.Column(db.Integer, nullable=False)
     ward_id = db.Column(db.Integer, db.ForeignKey('ward.id'))
     people = db.relationship('Person', backref='area', lazy=True)
