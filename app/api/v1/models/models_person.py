@@ -29,7 +29,7 @@ class PersonModels():
                 email=data['email'],
                 registered_on=datetime.datetime.utcnow()
             )
-            self.models.save_changes(new_user)
+            self.models.save_changes(new_person)
             response_object = {
                 'status': 'success',
                 'message': 'Successfully registered.'

@@ -7,5 +7,7 @@ api = Api(version_one)
 
 """ import classes containg the endpoints """
 from .views.views_person import Person
+from .views.views_county import County
 
 api.add_resource(Person, '/register/person')
+api.add_resource(County, '/register/county')

@@ -15,13 +15,10 @@ class Person(db.Model):
     land = db.relationship("Person", uselist=False, remote_side=[id])
     land_lord = db.Column(db.Boolean, nullable=True, default=False)
     area_id = db.Column(db.Integer, db.ForeignKey('area.id'),
-        nullable=False)
+         default=1)
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     password_hash = db.Column(db.String(100), nullable=True)
-    ward = db.relationship("Ward", uselist=False, back_populates="person")
-    constituency = db.relationship("Constituency", uselist=False, back_populates="person")
-    county = db.relationship("County", uselist=False, back_populates="person")
 
     @property
     def password(self):
@@ -43,7 +40,6 @@ class County(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(70), nullable=False)
-    admin_id = db.Column(db.Integer, db.ForeignKey('person.id'))
     constituencies = db.relationship('Constituency', backref='county', lazy=True)
 
     def __repr__(self):
@@ -55,9 +51,7 @@ class Constituency(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(70), nullable=False)
-    admin_id = db.Column(db.Integer, db.ForeignKey('person.id'))
     county_id = db.Column(db.Integer, db.ForeignKey('county.id'))
-    parent = db.relationship("Person", back_populates="ward")
     wards = db.relationship("Ward")
 
     def __repr__(self):
@@ -70,8 +64,6 @@ class Ward(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(70), nullable=False)
     constituency_id = db.Column(db.Integer, db.ForeignKey('constituency.id'))
-    admin_id = db.Column(db.Integer, db.ForeignKey('person.id'))
-    parent = db.relationship("Person", back_populates="ward")
     areas = db.relationship("Area")
 
     def __repr__(self):
